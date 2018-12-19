@@ -9,11 +9,11 @@ fi
 
 # Install gradle, maven and ant
 echo "Installing ANT"
-#sdk install ant
+sdk install ant
 
 echo "Installing Maven"
-#sdk install maven
+sdk install maven
 
 echo "Installing Gradle"
-#sdk install gradle
+sdk install gradle
 
