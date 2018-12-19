@@ -7,6 +7,9 @@ if [ ! -d "$HOME/.sdkman" ]; then
   exit 1
 fi
 
+# SOurce the sdkman init file to prepare the environment
+source $HOME/.sdkman/bin/sdkman-init.sh
+
 # Install gradle, maven and ant
 echo "Installing ANT"
 sdk install ant
