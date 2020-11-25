@@ -86,7 +86,7 @@ Step 5: Lets run a series of scripts which will do the following:
 > exit
 
 Step 6: We will now come back to the local machine and scp the zip file containing the code I submitted (which also has the tests which were provided to me by front)
-> scp -i ~/.ssh/jatin.pem front.zip ubuntu@12.123.12.123:~
+> `scp -i ~/.ssh/jatin.pem front.zip ubuntu@12.123.12.123:~`
 
 Step 7: We will now open two ssh sessions to the same server and refer to them as term1 and term2. In term1 we will run the server and in term2 we will run end to end tests (both written by me as well as provided by front)
 
