@@ -105,6 +105,7 @@ All the server code resides in folder src/main/java
 
 The following section tries to describe what each file is responsible in the structure:
 
+```
 app
   |---> App.java (the entry point to the server i.e. main method)
   |---> Server.java (Server class creates the server socket and listens on a port. When a new client connects, creates a thread for the handling the connection and lets ClientHandler take care of the connection)
@@ -117,6 +118,7 @@ Model
 	|---> Mode.java (enum which defines various modes)
 Util
 	|---> RenderUtil.java (A utility class which knows how to draw boxes and is used by canvas in rendering itself enclosed in box)
+```
 
 General idea is as follows:
 We start the server at 8124 port. Whenever a client connects to it, we create a new thread which handles communication with that client while the main thread goes back to listening for further connections. 
