@@ -1,2 +1,2 @@
 # Install unzip
-sudo apt-get install unzip curl make
+sudo apt-get install unzip curl make -y
