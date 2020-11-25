@@ -1,4 +1,4 @@
-# How to run the server locally
+# Option 1: How to run the server locally
 
 In order to run the server locally, you will need Java installed on your laptop. I have tested it using Java 11 (Released on Sept 2018 and supported until September 2026).
 
@@ -24,8 +24,26 @@ Step 6: You can also run the tests which were provided by Front using the follow
 
 Step 7: Go back t the first terminal and send `Ctrl-C` to the terminate the process.
 
+# Option 2: Running the code using Docker 
+I have included a Dockerfile which can be used to create a container which will run the server. 
 
-# How to run the server and tests on cloud instance.
+Step 1: Perform the following command to unzip the contents of the code and change to the directory which was just extracted
+> unzip front.zip
+> cd front
+
+Step 2: Build the docker image (this may take time). It starts with base image which has jdk installed. Copies the folder and builds the code.
+> docker build --tag canvas-server:0.1
+
+Step 3: Run the docker image which we just build in a container. We expose the container's 8124 port
+> docker run --publish 8124:8124 canvas-server:1.0
+
+Step 4: From the host run the tests provided by front
+> cd front_starter_code
+> npm install 
+> npm test
+
+
+# Option 3: How to run the server and tests on cloud instance.
 
 In cases where one does not want to change local machine and prefers to run on a cloud instance. One can follow the following setup. (Note: I used AWS light sail to quickly give me an Ubuntu 20.04 LTS). The following steps assumes the following:
 
@@ -77,6 +95,7 @@ Step 9: In term2 run the following command (no need to unzip the file again)
 > cd front-starter-code
 > npm install
 > npm test
+
 
 # Gotchas
 
