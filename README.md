@@ -19,7 +19,9 @@ Step 5: After the server is started. Start another terminal window and cd to the
 
 Step 6: You can also run the tests which were provided by Front using the following method:
 > cd front-starter-code
+
 > npm install
+
 > npm test
 
 Step 7: Go back t the first terminal and send `Ctrl-C` to the terminate the process.
@@ -29,6 +31,7 @@ I have included a Dockerfile which can be used to create a container which will 
 
 Step 1: Perform the following command to unzip the contents of the code and change to the directory which was just extracted
 > unzip front.zip
+
 > cd front
 
 Step 2: Build the docker image (this may take time). It starts with base image which has jdk installed. Copies the folder and builds the code.
@@ -39,7 +42,9 @@ Step 3: Run the docker image which we just build in a container. We expose the c
 
 Step 4: From the host run the tests provided by front
 > cd front_starter_code
+
 > npm install 
+
 > npm test
 
 
@@ -71,9 +76,13 @@ Step 5: Lets run a series of scripts which will do the following:
 - install node and npm (we will install the current LTS)
 
 > cd ~/scripts/shell
+
 > ./install-apps.sh
+
 > ./install-java.sh
+
 > ./install-node.sh
+
 > exit
 
 Step 6: We will now come back to the local machine and scp the zip file containing the code I submitted (which also has the tests which were provided to me by front)
@@ -83,17 +92,27 @@ Step 7: We will now open two ssh sessions to the same server and refer to them a
 
 Step 8: In term1 run the server using the following commands:
 > ssh -i ~/.ssh/jatin.pem ubuntu@12.123.12.123
+
 > unzip front.zip
+
 > cd front
+
 > ./gradlew clean build shadowJar
+
 > java -jar build/libs/server.jar
+
 
 Step 9: In term2 run the following command (no need to unzip the file again)
 > ssh -i ~/.ssh/jatin.pem ubuntu@12.123.12.123
+
 > cd front
+
 > ./gradlew clean e2e  # run tests written in Java by Jatin
+
 > cd front-starter-code
+
 > npm install
+
 > npm test
 
 
