@@ -113,11 +113,11 @@ app
 Config
   |---> Config.java (default app configurations are here. Provides methods to override the config. Can be overridden by either command line arguments or property file (not implemented)
 Model
-	|---> Canvas.java (Each client creates an object of this class. Canvas object contain the actual buffer which store the state. Provide the methods which understand how to change the state by providing methods like clear, right, left, steps which are used by ClientHandler)
-	|---> Direction.java (Enum used to define various directions that cursor can move to. Use of enum makes for more readable code)
-	|---> Mode.java (enum which defines various modes)
+  |---> Canvas.java (Each client creates an object of this class. Canvas object contain the actual buffer which store the state. Provide the methods which understand how to change the state by providing methods like clear, right, left, steps which are used by ClientHandler)
+  |---> Direction.java (Enum used to define various directions that cursor can move to. Use of enum makes for more readable code)
+  |---> Mode.java (enum which defines various modes)
 Util
-	|---> RenderUtil.java (A utility class which knows how to draw boxes and is used by canvas in rendering itself enclosed in box)
+  |---> RenderUtil.java (A utility class which knows how to draw boxes and is used by canvas in rendering itself enclosed in box)
 ```
 
 General idea is as follows:
