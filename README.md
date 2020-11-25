@@ -77,3 +77,75 @@ Step 9: In term2 run the following command (no need to unzip the file again)
 > cd front-starter-code
 > npm install
 > npm test
+
+# Gotchas
+
+While doing the exercise, I found two places where the spec and the provided tests differ. My guiding principal was to not modify the tests and hence I decided to write the server on a slightly modified spec. Here are the changes in the spec that I notices:
+
+* when sending render responses, the test client expects that each row is separated by \n instead of \r\n. I tested it by generating the box using /n and /r/n and comparing the hashes. 
+
+* As soon as client connects, it expects the server to send "hello". If the server does not send "hello", client does not send commands. After client gets "hello" from server, it sends all the commands. There is a line in ClientHandler which if commented breaks all the tests. 
+
+# Notes on using Java and gradle.
+I decided to use Java as it is the language I am most comfortable in. I also decided to use gradle which provides a convention based tooling to package app into a runnable jar, ability to define and run tests.
+
+Gradle also manages dependencies. The server code does not use any external dependencies other than what is provided by the Java JDK. However, the tests pulls in two dependencies:
+* JUnit: unit test framework for Java
+* common-codec: I used hex sha1 function to validate server responses the same way the front provided tests were doing.
+
+I decided to use a gradle plugin called shadowJar which conveniently creates a jar file with all the dependencies packages into it (makes the jar file size bigger .. but makes dependency management to run the code easier). Steps to build and tun server are: build server into a runnable jar file and run the jar file.
+
+The server uses default configuration like following:
+- server listens on port 8124
+- all canvases are of size 30x30 and cursor starts at (15,15)
+I thought about using command line flags to override these defaults. However decided against it in order to save time as well as control some amount of complexity.
+
+# Code organization
+All the server code resides in folder src/main/java
+
+The following section tries to describe what each file is responsible in the structure:
+
+app
+  |---> App.java (the entry point to the server i.e. main method)
+  |---> Server.java (Server class creates the server socket and listens on a port. When a new client connects, creates a thread for the handling the connection and lets ClientHandler take care of the connection)
+  |---> ClientHandler.java (client handler contains code which takes commands from the client, maintains the state of the canvas and updates it based on the commands, responds to client with data when asked by render or coord command)
+Config
+  |---> Config.java (default app configurations are here. Provides methods to override the config. Can be overridden by either command line arguments or property file (not implemented)
+Model
+	|---> Canvas.java (Each client creates an object of this class. Canvas object contain the actual buffer which store the state. Provide the methods which understand how to change the state by providing methods like clear, right, left, steps which are used by ClientHandler)
+	|---> Direction.java (Enum used to define various directions that cursor can move to. Use of enum makes for more readable code)
+	|---> Mode.java (enum which defines various modes)
+Util
+	|---> RenderUtil.java (A utility class which knows how to draw boxes and is used by canvas in rendering itself enclosed in box)
+
+General idea is as follows:
+We start the server at 8124 port. Whenever a client connects to it, we create a new thread which handles communication with that client while the main thread goes back to listening for further connections. 
+
+Each thread creates the canvas object. The canvas object maintains state of the canvas (what squares are filled and what are not filled, current co-ordinates, current mode). Clienthandler accepts commands from the client and uses those commands to instruct the canvas object to make changes to its state. Whenever the client asks for some response (e.g. coords or render), the Clienthandler asks canvas to provide those answers and passes along to the client. When client sends "quit", the client handler closes the connection. 
+
+Please feel free to read comments in all the above files.
+
+# Unit tests and end to end tests
+The tests can be found in src/test/java.
+
+The following folders / packages contain unit tests:
+info/jatinshah/front/model
+Info/jatinshah/front/util
+
+And the following folders contain end to end tests:
+Info/jatinshah/front/e2e
+
+In order to run unit tests, execute the following command:
+> ./gradlew clean test
+
+In order to run end to end tests, execute the following command:
+> ./gradlew clean e2e
+
+Notes:
+- Unit tests are run every time there is a build, to ensure that new changes do not break any tests
+- End to end tests expect a server running and listening on port 8124. This can be accomplished by running the command `java -jar build/libs/server.jar` in a different terminal window on the same machine. And then running the end to end tests in another terminal.
+
+I do understand that I have not provided complete coverage. However I wanted to submit the working code before I go on Thanksgiving break. If I have more time, I would love to add mode tests.
+
+
+	
